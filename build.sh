@@ -82,7 +82,6 @@ emcc \
 # Concat all .js sources
 cat \
 	src/jsmpeg.js \
-	src/video-element.js \
 	src/player.js \
 	src/buffer.js \
 	src/ajax.js \

@@ -87,7 +87,7 @@ TS.prototype.parsePacket = function() {
 			this.bits.skip(6);
 			var headerLength = this.bits.read(8);
 			var payloadBeginIndex = this.bits.index + (headerLength << 3);
-			
+
 			var pi = this.pesPacketInfo[streamId];
 			if (pi) {
 				var pts = 0;
@@ -108,14 +108,14 @@ TS.prototype.parsePacket = function() {
 					// so we're using JavaScript's double number type. Also
 					// divide by the 90khz clock to get the pts in seconds.
 					pts = (p32_30 * 1073741824 + p29_15 * 32768 + p14_0)/90000;
-					
+
 					this.currentTime = pts;
 					if (this.startTime === -1) {
 						this.startTime = pts;
 					}
 				}
 
-				var payloadLength = packetLength 
+				var payloadLength = packetLength
 					? packetLength - headerLength - 3
 					: 0;
 				this.packetStart(pi, pts, payloadLength);
@@ -127,11 +127,11 @@ TS.prototype.parsePacket = function() {
 
 		if (streamId) {
 			// Attempt to detect if the PES packet is complete. For Audio (and
-			// other) packets, we received a total packet length with the PES 
+			// other) packets, we received a total packet length with the PES
 			// header, so we can check the current length.
 
 			// For Video packets, we have to guess the end by detecting if this
-			// TS packet was padded - there's no good reason to pad a TS packet 
+			// TS packet was padded - there's no good reason to pad a TS packet
 			// in between, but it might just fit exactly. If this fails, we can
 			// only wait for the next PES header for that stream.
 
@@ -142,13 +142,14 @@ TS.prototype.parsePacket = function() {
 
 				var hasPadding = !payloadStart && (adaptationField & 0x2);
 				if (complete || (this.guessVideoFrameEnd && hasPadding)) {
-					this.packetComplete(pi);	
+					this.packetComplete(pi);
 				}
 			}
 		}
 	}
 
 	this.bits.index = end << 3;
+
 	return true;
 };
 

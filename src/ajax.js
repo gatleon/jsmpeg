@@ -10,7 +10,6 @@ var AjaxSource = function(url, options) {
 	this.established = false;
 	this.progress = 0;
 
-	this.onEstablishedCallback = options.onSourceEstablished;
 	this.onCompletedCallback = options.onSourceCompleted;
 };
 
@@ -23,7 +22,7 @@ AjaxSource.prototype.start = function() {
 
 	this.request.onreadystatechange = function() {
 		if (
-			this.request.readyState === this.request.DONE && 
+			this.request.readyState === this.request.DONE &&
 			this.request.status === 200
 		) {
 			this.onLoad(this.request.response);
@@ -53,9 +52,6 @@ AjaxSource.prototype.onLoad = function(data) {
 	this.completed = true;
 	this.progress = 1;
 
-	if (this.onEstablishedCallback) {
-		this.onEstablishedCallback(this);
-	}
 	if (this.onCompletedCallback) {
 		this.onCompletedCallback(this);
 	}

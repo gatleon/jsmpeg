@@ -10,7 +10,7 @@
 # be eliminated by the SIDE_MODULE=2 setting - not sure why that happens.
 
 # This NEEDS to be compiled with emscripten 1.38.47. Newer versions mess with
-# malloc and friends and need some more glue code for side modules that I 
+# malloc and friends and need some more glue code for side modules that I
 # haven't quite worked out yet. If you have any idea how to build a SIDE_MODULE
 # (or STANDALONE_WASM - as seems to be the new deal) with support for malloc,
 # please let me know or file a PR.
@@ -26,7 +26,7 @@
 # There used to be an $EMSCRIPTEN var set by the emsdk_env script that pointed
 # to the correct directory, but this seems to have gone now.
 
-# In conclusion, emscripten encapsulates everything that I hate about native 
+# In conclusion, emscripten encapsulates everything that I hate about native
 # development :/
 
 EMSCRIPTEN_LIB=$EMSDK/fastcomp/emscripten/system/lib
@@ -102,7 +102,7 @@ cat \
 	> jsmpeg.js
 
 # Append the .wasm module to the .js source as base64 string
-echo "JSMpeg.WASM_BINARY_INLINED='$(base64 -w 0 jsmpeg.wasm)';" \
+echo "JSMpeg.WASM_BINARY_INLINED='$(base64 jsmpeg.wasm)';" \
 	>> jsmpeg.js
 
 

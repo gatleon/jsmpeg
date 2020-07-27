@@ -20,7 +20,7 @@ var Player = function(url, options) {
       ? new JSMpeg.Decoder.MPEG1VideoWASM(options)
       : new JSMpeg.Decoder.MPEG1Video(options);
 
-    this.renderer = !options.disableGl && JSMpeg.Renderer.WebGL.IsSupported()
+    this.renderer = JSMpeg.Renderer.WebGL.IsSupported()
       ? new JSMpeg.Renderer.WebGL(options)
       : new JSMpeg.Renderer.Canvas2D(options);
 

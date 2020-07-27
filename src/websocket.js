@@ -38,8 +38,8 @@ WSSource.prototype.start = function() {
 	this.shouldAttemptReconnect = !!this.reconnectInterval;
 	this.progress = 0;
 	this.established = false;
-	
-	this.socket = new WebSocket(this.url, this.options.protocols || null);
+
+	this.socket = new WebSocket(this.url, this.options.protocols || []);
 	this.socket.binaryType = 'arraybuffer';
 	this.socket.onmessage = this.onMessage.bind(this);
 	this.socket.onopen = this.onOpen.bind(this);
@@ -59,7 +59,7 @@ WSSource.prototype.onClose = function() {
 	if (this.shouldAttemptReconnect) {
 		clearTimeout(this.reconnectTimeoutId);
 		this.reconnectTimeoutId = setTimeout(function(){
-			this.start();	
+			this.start();
 		}.bind(this), this.reconnectInterval*1000);
 	}
 };

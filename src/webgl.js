@@ -9,7 +9,7 @@ var WebGLRenderer = function(options) {
 	this.hasTextureData = {};
 
 	var contextCreateOptions = {
-		preserveDrawingBuffer: !!options.preserveDrawingBuffer,
+		preserveDrawingBuffer: false,
 		alpha: false,
 		depth: false,
 		stencil: false,
@@ -17,8 +17,8 @@ var WebGLRenderer = function(options) {
 		premultipliedAlpha: false
 	};
 
-	this.gl = 
-		this.canvas.getContext('webgl', contextCreateOptions) || 
+	this.gl =
+		this.canvas.getContext('webgl', contextCreateOptions) ||
 		this.canvas.getContext('experimental-webgl', contextCreateOptions);
 
 	if (!this.gl) {
@@ -64,7 +64,7 @@ var WebGLRenderer = function(options) {
 
 WebGLRenderer.prototype.destroy = function() {
 	var gl = this.gl;
-	
+
 	this.deleteTexture(gl.TEXTURE0, this.textureY);
 	this.deleteTexture(gl.TEXTURE1, this.textureCb);
 	this.deleteTexture(gl.TEXTURE2, this.textureCr);
@@ -151,7 +151,7 @@ WebGLRenderer.prototype.renderProgress = function(progress) {
 
 	var loc = gl.getUniformLocation(this.loadingProgram, 'progress');
 	gl.uniform1f(loc, progress);
-	
+
 	gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 };
 
@@ -167,12 +167,12 @@ WebGLRenderer.prototype.render = function(y, cb, cr, isClampedArray) {
 		h2 = h >> 1;
 
 	// In some browsers WebGL doesn't like Uint8ClampedArrays (this is a bug
-	// and should be fixed soon-ish), so we have to create a Uint8Array view 
+	// and should be fixed soon-ish), so we have to create a Uint8Array view
 	// for each plane.
 	if (isClampedArray && this.shouldCreateUnclampedViews) {
 		y = new Uint8Array(y.buffer),
 		cb = new Uint8Array(cb.buffer),
-		cr = new Uint8Array(cr.buffer);	
+		cr = new Uint8Array(cr.buffer);
 	}
 
 	gl.useProgram(this.program);
@@ -195,7 +195,7 @@ WebGLRenderer.prototype.updateTexture = function(unit, texture, w, h, data) {
 	else {
 		this.hasTextureData[unit] = true;
 		gl.texImage2D(
-			gl.TEXTURE_2D, 0, gl.LUMINANCE, w, h, 0, 
+			gl.TEXTURE_2D, 0, gl.LUMINANCE, w, h, 0,
 			gl.LUMINANCE, gl.UNSIGNED_BYTE, data
 		);
 	}
@@ -214,15 +214,15 @@ WebGLRenderer.IsSupported = function() {
 			return false;
 		}
 
-		var canvas = document.createElement('canvas'); 
+		var canvas = document.createElement('canvas');
 		return !!(
-			canvas.getContext('webgl') || 
+			canvas.getContext('webgl') ||
 			canvas.getContext('experimental-webgl')
 		);
 	}
 	catch (err) {
 		return false;
-	} 
+	}
 };
 
 WebGLRenderer.SHADER = {

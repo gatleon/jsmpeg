@@ -34,19 +34,10 @@ The `url` argument accepts a URL to an MPEG .ts file or a WebSocket server (ws:/
 The `options` argument supports the following properties:
 
 - `canvas` – the HTML Canvas elment to use for video rendering. If none is given, the renderer will create its own Canvas element.
-- `loop` – whether to loop the video (static files only). Default `true`.
-- `autoplay` - whether to start playing immediately (static files only). Default `false`.
 - `audio` - whether to decode audio. Default `true`.
 - `video` - whether to decode video. Default `true`.
 - `poster` – URL to an image to use as the poster to show before the video plays.
 - `pauseWhenHidden` – whether to pause playback when the tab is inactive. Default `true`. Note that browsers usually throttle JS in inactive tabs anyway.
-- `disableGl` - whether to disable WebGL and always use the Canvas2D renderer. Default `false`.
-- `disableWebAssembly` - whether to disable WebAssembly and always use JavaScript decoders. Default `false`.
-- `preserveDrawingBuffer` – whether the WebGL context is created with `preserveDrawingBuffer` - necessary for "screenshots" via `canvas.toDataURL()`. Default `false`.
-- `progressive` - whether to load data in chunks (static files only). When enabled, playback can begin before the whole source has been completely loaded. Default `true`.
-- `throttled` - when using `progressive`, whether to defer loading chunks when they're not needed for playback yet. Default `true`.
-- `chunkSize` - when using `progressive`, the chunk size in bytes to load at a time. Default `1024*1024` (1mb).
-- `decodeFirstFrame` - whether to decode and display the first frame of the video. Useful to set up the Canvas size and use the frame as the "poster" image. This has no effect when using `autoplay` or streaming sources. Default `true`.
 - `maxAudioLag` – when streaming, the maximum enqueued audio length in seconds.
 - `videoBufferSize` – when streaming, size in bytes for the video decode buffer. Default 512*1024 (512kb). You may have to increase this for very high bitrates.
 - `audioBufferSize` – when streaming, size in bytes for the audio decode buffer. Default 128*1024 (128kb). You may have to increase this for very high bitrates.

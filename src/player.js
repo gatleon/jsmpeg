@@ -6,13 +6,11 @@ var Player = function(url, options) {
   this.source = new JSMpeg.Source.WebSocket(url, options);
 
   this.maxAudioLag = options.maxAudioLag || 0.25;
-  this.loop = options.loop !== false;
-  this.autoplay = true
 
   this.demuxer = new JSMpeg.Demuxer.TS(options);
   this.source.connect(this.demuxer);
 
-  if (!options.disableWebAssembly && JSMpeg.WASMModule.IsSupported()) {
+  if (JSMpeg.WASMModule.IsSupported()) {
     this.wasmModule = JSMpeg.WASMModule.GetModule();
     options.wasmModule = this.wasmModule;
   }
@@ -77,9 +75,7 @@ var Player = function(url, options) {
 
 Player.prototype.startLoading = function() {
   this.source.start();
-  if (this.autoplay) {
-    this.play();
-  }
+  this.play();
 };
 
 Player.prototype.showHide = function(ev) {
@@ -138,7 +134,7 @@ Player.prototype.setVolume = function(volume) {
 Player.prototype.stop = function(ev) {
   this.pause();
   this.seek(0);
-  if (this.video && this.options.decodeFirstFrame !== false) {
+  if (this.video) {
     this.video.decode();
   }
 };

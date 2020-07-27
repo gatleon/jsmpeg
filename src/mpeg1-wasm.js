@@ -11,7 +11,6 @@ var MPEG1WASM = function(options) {
 		? JSMpeg.BitBuffer.MODE.EVICT
 		: JSMpeg.BitBuffer.MODE.EXPAND;
 
-	this.decodeFirstFrame = options.decodeFirstFrame !== false;
 	this.hasSequenceHeader = false;
 };
 
@@ -64,7 +63,7 @@ MPEG1WASM.prototype.bufferWrite = function(buffers) {
 		this.instance.heapU8.set(buffers[i], ptr);
 		ptr += buffers[i].length;
 	}
-	
+
 	this.functions._mpeg1_decoder_did_write(this.decoder, totalLength);
 	return totalLength;
 };
@@ -88,9 +87,7 @@ MPEG1WASM.prototype.loadSequnceHeader = function() {
 		this.destination.resize(w, h);
 	}
 
-	if (this.decodeFirstFrame) {
-		this.decode();
-	}
+	this.decode();
 };
 
 MPEG1WASM.prototype.decode = function() {

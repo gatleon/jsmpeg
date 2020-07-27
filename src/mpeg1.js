@@ -1,6 +1,6 @@
 JSMpeg.Decoder.MPEG1Video = (function(){ "use strict";
 
-// Inspired by Java MPEG-1 Video Decoder and Player by Zoltan Korandi 
+// Inspired by Java MPEG-1 Video Decoder and Player by Zoltan Korandi
 // https://sourceforge.net/projects/javampeg1video/
 
 var MPEG1 = function(options) {
@@ -20,7 +20,6 @@ var MPEG1 = function(options) {
 	this.blockData = new Int32Array(64);
 
 	this.currentFrame = 0;
-	this.decodeFirstFrame = options.decodeFirstFrame !== false;
 };
 
 MPEG1.prototype = Object.create(JSMpeg.Decoder.Base.prototype);
@@ -34,16 +33,13 @@ MPEG1.prototype.write = function(pts, buffers) {
 			return false;
 		}
 		this.decodeSequenceHeader();
-
-		if (this.decodeFirstFrame) {
-			this.decode();
-		}
+		this.decode();
 	}
 };
 
 MPEG1.prototype.decode = function() {
 	var startTime = JSMpeg.Now();
-	
+
 	if (!this.hasSequenceHeader) {
 		return false;
 	}
